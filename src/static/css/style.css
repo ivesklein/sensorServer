@@ -1,0 +1,99 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;	
+}
+
+body, .body{
+	background: #000a41;
+	display: grid;
+	place-items: center;
+	min-height: 100vh;
+}
+
+.bg{
+	background: #000a41;
+	min-height: 100vh;
+	min-width: 100%;
+}
+
+.menu-btn{
+	display: grid;
+	place-items: center;
+	width: 80px;
+	height: 80px;
+	cursor: pointer;
+	transition: all .5s ease-in-out;
+	border: 3px solid #fff;
+}
+
+.menu-btn__burger {
+	width: 50px;
+	height: 6px;
+	background: #fff;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(255, 101, 47, .2);
+	transition: all .5s ease-in-out;
+}
+
+.menu-btn__burger::before, .menu-btn__burger::after {
+	content: '';
+	position: absolute;
+	width: 50px;
+	height: 6px;
+	background: #fff;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(255, 101, 47, .2);
+	transition: all .5s ease-in-out;
+}
+
+.menu-btn__burger::before {
+	transform: translateY(-16px);
+}
+
+.menu-btn__burger::after {
+	transform: translateY(16px);
+}
+
+.menu-btn.open .menu-btn__burger{
+	transform: translateX(-50px);
+	background: transparent;
+	box-shadow: none;
+}
+
+.menu-btn.open .menu-btn__burger::before{
+	transform: rotate(225deg) translate(-35px, 35px);
+}
+
+.menu-btn.open .menu-btn__burger::after{
+	transform: rotate(135deg) translate(-35px, -35px);
+}
+
+.blur{
+	filter: blur(0.5px);
+}
+
+.loading{
+	background: url(/img/thing3.gif);
+	background-size: 100%;
+	width: 150px;
+	height: 150px;
+	border: 1px solid red;
+	border-radius: 75px;
+}
+
+@-webkit-keyframes rotate {
+    from {
+        filter: hue-rotate(0deg);
+    }
+    to { 
+        filter: hue-rotate(360deg);
+    }
+}
+
+.hue {
+    -webkit-animation-name: rotate; 
+    -webkit-animation-duration: 5s; 
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+}

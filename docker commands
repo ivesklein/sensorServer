@@ -1,0 +1,10 @@
+docker commands
+
+in WINDOWS use PowerShell, avoid git bash & cmd
+
+- run in dev file change reactive
+docker run -dp 3000:3000 -w /app -v "$(pwd):/app" node:12-alpine sh -c "yarn install && yarn run dev"
+
+- run normaly
+docker build -t getting-started .
+docker run -dp 3000:3000 getting-started
