@@ -12,47 +12,53 @@
             var dataPoints1 = [];
             var dataPoints2 = [];
 
-            var chart = new CanvasJS.Chart("chartContainer", {
-                zoomEnabled: true,
-                title: {
-                    text: "Sensor"
-                },
-                axisX: {
-                    title: "chart updates every 10 secs"
-                },
-                axisY:{
-                    //prefix: "$",
-                    includeZero: false
-                }, 
-                toolTip: {
-                    shared: true
-                },
-                legend: {
-                    cursor:"pointer",
-                    verticalAlign: "top",
-                    fontSize: 22,
-                    fontColor: "dimGrey",
-                    itemclick : toggleDataSeries
-                },
-                data: [
-                    { 
-                        type: "line",
-                        xValueType: "dateTime",
-                        yValueFormatString: "####.0°C",
-                        xValueFormatString: "hh:mm:ss TT",
-                        showInLegend: true,
-                        name: "Temp",
-                        dataPoints: dataPoints1
+            let chart = undefined
+
+            let initChart = function() {
+                chart = new CanvasJS.Chart("chartContainer", {
+                    zoomEnabled: true,
+                    title: {
+                        text: "Sensor"
                     },
-                    {               
-                        type: "line",
-                        xValueType: "dateTime",
-                        yValueFormatString: "#.0",
-                        showInLegend: true,
-                        name: "Hum" ,
-                        dataPoints: dataPoints2
-                }]
-            });
+                    axisX: {
+                        title: "chart updates every 10 secs"
+                    },
+                    axisY:{
+                        //prefix: "$",
+                        includeZero: false
+                    }, 
+                    toolTip: {
+                        shared: true
+                    },
+                    legend: {
+                        cursor:"pointer",
+                        verticalAlign: "top",
+                        fontSize: 22,
+                        fontColor: "dimGrey",
+                        itemclick : toggleDataSeries
+                    },
+                    data: [
+                        { 
+                            type: "line",
+                            xValueType: "dateTime",
+                            yValueFormatString: "####.0°C",
+                            xValueFormatString: "hh:mm:ss TT",
+                            showInLegend: true,
+                            name: "Temp",
+                            dataPoints: dataPoints1
+                        },
+                        {               
+                            type: "line",
+                            xValueType: "dateTime",
+                            yValueFormatString: "#.0",
+                            showInLegend: true,
+                            name: "Hum" ,
+                            dataPoints: dataPoints2
+                    }]
+                });
+            }
+
+            initChart()
 
             function toggleDataSeries(e) {
                 if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
@@ -115,6 +121,11 @@
 
                 start -= val*1000*60*60*24
                 end -= val*1000*60*60*24
+
+                dataPoints1 = []
+                dataPoints2 = []
+
+                initChart()
 
                 updateChart2()
             };
