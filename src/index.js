@@ -11,7 +11,7 @@ app.use(express.static(__dirname + '/static'));
 
 
 app.get('/setpoint/:temp/:hum/:rel', setPoint);
-app.get('/getitems', getItems);
+app.get('/getitems/:start/:end', getItems);
 
 
 db.init().then(() => {

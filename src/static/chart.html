@@ -6,6 +6,9 @@
         <script>
         window.onload = function () {
 
+            let start = new Date((new Date()).toJSON().slice(0,10))//end - 1000*60*60*24
+            let end = start + 1000*60*60*24
+
             var dataPoints1 = [];
             var dataPoints2 = [];
 
@@ -67,7 +70,7 @@
             
             async function updateChart2() {
 
-                const jsondata = await fetch( "/getItems" )
+                const jsondata = await fetch( `/getItems/${start}/${end}` )
                 const data = await jsondata.json()
 
                 data.forEach((point, i) => {
@@ -91,14 +94,30 @@
 
                 })
 
-                // updating legend text with  updated with y Value 
-                chart.options.data[0].legendText = " Temp " + dataPoints1[dataPoints1.length-1].y + "°C";
-                chart.options.data[1].legendText = " Hum  " + dataPoints2[dataPoints2.length-1].y + "%"; 
+                // updating legend text with  updated with y Value
+                if(dataPoints1.length>0){
+                    chart.options.data[0].legendText = " Temp " + dataPoints1[dataPoints1.length-1].y + "°C";
+                    chart.options.data[1].legendText = " Hum  " + dataPoints2[dataPoints2.length-1].y + "%"; 
+                }
                 chart.render();
             }
 
             updateChart2()
             setInterval(function(){updateChart2()}, updateInterval);
+
+            let offset = document.getElementById("offset");
+
+            offset.oninput = function(event){
+                console.log(event)
+                const val = +event.currentTarget.value
+                start = new Date((new Date()).toJSON().slice(0,10))//end - 1000*60*60*24
+                end = start + 1000*60*60*24
+
+                start -= val*1000*60*60*24
+                end -= val*1000*60*60*24
+
+                updateChart2()
+            };
 
         }
         </script>
@@ -106,6 +125,10 @@
     
     <body>
         <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+        <div>
+            <label for="offset"></label>
+            <input type="number" name="offset" id="offset" />
+        </div>
         <script src="js/canvasjs.min.js"></script>
     </body>
 </html>

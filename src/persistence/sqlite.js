@@ -39,16 +39,29 @@ async function teardown() {
     });
 }
 
-async function getItems() {
+async function getItems(start = null, end = null) {
     return new Promise((acc, rej) => {
-        db.all('SELECT * FROM temp', (err, rows) => {
-            if (err) return rej(err);
-            acc(
-                rows
-            );
-        });
+        if(start===null){
+            db.all('SELECT * FROM temp', (err, rows) => {
+                if (err) return rej(err);
+                acc(
+                    rows
+                );
+            });
+        }else{
+            db.all('SELECT * FROM temp WHERE time >= ? AND time <= ?',
+            [start, end],
+            (err, rows) => {
+                if (err) return rej(err);
+                acc(
+                    rows
+                );
+            });
+        }
     });
 }
+
+
 
 /*async function getItem(id) {
     return new Promise((acc, rej) => {
